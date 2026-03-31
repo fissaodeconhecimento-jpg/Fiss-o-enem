@@ -1,0 +1,113 @@
+/* =======================================================
+   base.css
+   Fissão de Conhecimento — ENEM
+   ======================================================= */
+
+*, *::before, *::after {
+  margin:0; padding:0; box-sizing:border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--bg); color: var(--tx);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  min-height: 100vh; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background .25s, color .25s;
+}
+#loginScreen {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  animation: fadeIn .3s ease;
+}
+#loginScreen.hidden {
+  display: none;
+}
+.login-logo-wrap {
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px; margin-bottom: 28px;
+}
+.login-atom {
+  position: relative; width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.login-atom-core {
+  width: 14px; height: 14px; background: var(--ind); border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(99,102,241,.5);
+  animation: aCore 2.5s ease-in-out infinite; position: relative; z-index: 2;
+}
+.login-atom-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid var(--ind-br);
+  animation: aSpin 3.5s linear infinite;
+}
+.login-atom-ring::after {
+  content: ''; position: absolute; top: 50%; left: -5px;
+  width: 8px; height: 8px; background: var(--amb); border-radius: 50%;
+  transform: translateY(-50%); box-shadow: 0 0 8px var(--amb);
+}
+.login-atom-ring2 {
+  position: absolute; inset: 4px; border-radius: 50%;
+  border: 1.5px dashed rgba(99,102,241,.25);
+  animation: aSpin 7s linear infinite reverse;
+}
+.login-brand {
+  text-align: left;
+}
+.login-brand-name {
+  font-size: 20px; font-weight: 800; letter-spacing: -.02em;
+  background: linear-gradient(135deg, var(--ind-l), var(--amb));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1.2;
+}
+.login-brand-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; color: var(--muted2); letter-spacing: .14em;
+  text-transform: uppercase; margin-top: 2px;
+}
+.login-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 18px 0;
+}
+.login-divider-line {
+  flex:1; height:1px; background:var(--border2);
+}
+.login-divider-txt {
+  font-size: 11px; color: var(--muted2); white-space: nowrap;
+}
+.login-demo-btn {
+  width: 100%; background: none; border: 1.5px solid var(--amb-br);
+  color: var(--amb); padding: 10px; border-radius: var(--rsm);
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all var(--tr);
+}
+.login-demo-btn:hover {
+  background: var(--amb-bg); transform: translateY(-1px);
+}
+.login-note {
+  font-size: 10.5px; color: var(--muted2); text-align: center;
+  margin-top: 16px; line-height: 1.5;
+}
+.login-err {
+  font-size: 12px; color: var(--danger); background: var(--danger-bg);
+  border: 1px solid var(--danger-br); border-radius: var(--rxs);
+  padding: 8px 11px; margin-bottom: 12px; display: none;
+}
+.login-user-badge {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--ind-bg); border: 1px solid var(--ind-br);
+  border-radius: var(--rsm); padding: 8px 12px; margin-bottom: 14px;
+}
+.login-user-badge span {
+  font-size: 13px; font-weight: 600; color: var(--ind-l);
+}
+.login-logout {
+  font-size: 11px; color: var(--muted2); background: none; border: none;
+  cursor: pointer; font-family: 'Outfit', sans-serif; transition: color var(--tr);
+}
+.login-logout:hover {
+  color: var(--danger);
+}

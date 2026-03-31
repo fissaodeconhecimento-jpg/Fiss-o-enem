@@ -1,0 +1,99 @@
+/* =======================================================
+   variables.css
+   Fissão de Conhecimento — ENEM
+   ======================================================= */
+
+:root {
+  --sidebar-w: 252px;
+
+  /* Dark backgrounds */
+  --bg:        #0F1117;
+  --surface:   #1A1D2E;
+  --surface2:  #222540;
+  --surface3:  #2A2E4A;
+  --sidebar:   #13111F;
+  --topbar:    rgba(15,17,23,0.94);
+
+  /* Text */
+  --tx:        #E8EAF6;
+  --tx2:       #B0B8D8;
+  --muted:     #4A5280;
+  --muted2:    #6B7AAA;
+
+  /* Brand: Índigo */
+  --ind:       #6366F1;
+  --ind-l:     #818CF8;
+  --ind-d:     #4F46E5;
+  --ind-bg:    rgba(99,102,241,0.12);
+  --ind-br:    rgba(99,102,241,0.3);
+
+  /* Acento: Âmbar */
+  --amb:       #F5C518;
+  --amb-l:     #FFD84D;
+  --amb-bg:    rgba(245,197,24,0.1);
+  --amb-br:    rgba(245,197,24,0.28);
+
+  /* Semânticos */
+  --ok:        #22C55E;
+  --ok-bg:     rgba(34,197,94,0.1);
+  --ok-br:     rgba(34,197,94,0.3);
+  --danger:    #F87171;
+  --danger-bg: rgba(248,113,113,0.1);
+  --danger-br: rgba(248,113,113,0.3);
+  --info:      #60A5FA;
+  --info-bg:   rgba(96,165,250,0.1);
+  --info-br:   rgba(96,165,250,0.3);
+  --warn:      #FB923C;
+
+  /* UI */
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+  --radius:    12px;
+  --rsm:       8px;
+  --rxs:       6px;
+  --shadow:    0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.5);
+  --tr: .16s cubic-bezier(.4,0,.2,1);
+  --spring: .4s cubic-bezier(.34,1.56,.64,1);
+}
+[data-theme="light"] {
+  --bg:        #F7F8FC;
+  --surface:   #FFFFFF;
+  --surface2:  #F3F4F8;
+  --surface3:  #ECEEF5;
+  --sidebar:   #18163A;
+  --topbar:    rgba(247,248,252,0.94);
+
+  --tx:        #1F2937;
+  --tx2:       #374151;
+  --muted:     #9CA3AF;
+  --muted2:    #6B7280;
+
+  --ind:       #4F46E5;
+  --ind-l:     #6366F1;
+  --ind-d:     #3730A3;
+  --ind-bg:    #EEF2FF;
+  --ind-br:    #C7D2FE;
+
+  --amb:       #F59E0B;
+  --amb-l:     #FCD34D;
+  --amb-bg:    #FFFBEB;
+  --amb-br:    #FDE68A;
+
+  --ok:        #22C55E;
+  --ok-bg:     #F0FDF4;
+  --ok-br:     #BBF7D0;
+  --danger:    #EF4444;
+  --danger-bg: #FEF2F2;
+  --danger-br: #FECACA;
+  --info:      #3B82F6;
+  --info-bg:   #EFF6FF;
+  --info-br:   #BFDBFE;
+  --warn:      #F97316;
+
+  --border:    rgba(0,0,0,0.07);
+  --border2:   rgba(0,0,0,0.12);
+  --shadow:    0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);

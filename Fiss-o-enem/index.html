@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fissão de Conhecimento — ENEM</title>
+ 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+ 
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <style>
+    #asstPanel.open { display: flex; flex-direction: column; }
+    .asst-typing { display:flex;align-items:center;gap:4px;padding:10px 14px !important; }
+    .asst-typing span { width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);animation:typing-bounce .9s ease-in-out infinite; }
+    .asst-typing span:nth-child(2) { animation-delay:.15s; }
+    .asst-typing span:nth-child(3) { animation-delay:.30s; }
+    @keyframes typing-bounce { 0%,80%,100%{transform:translateY(0);opacity:.45} 40%{transform:translateY(-5px);opacity:1} }
+  </style>
+</head>
+<body>
+ 
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo-wrap">
+      <div class="login-atom">
+        <div class="login-atom-ring2"></div>
+        <div class="login-atom-ring"></div>
+        <div class="login-atom-core"></div>
+      </div>
+      <div class="login-brand">
+        <div class="login-brand-name">Fissão de<br>Conhecimento</div>
+        <div class="login-brand-sub">ENEM · Sistema Inteligente</div>
+      </div>
+    </div>
+ 
+<div id="loginFormArea">
+  <div class="login-title">Entrar na plataforma</div>
+  <div class="login-err" id="loginErr" style="display:none;"></div>
+ 
+  <div class="login-fg">
+    <label>Email</label>
+    <input id="loginUser" type="email" placeholder="seu@email.com" autocomplete="username"/>
+  </div>
+ 
+  <div class="login-fg">
+    <label>Senha</label>
+    <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"/>
+  </div>
+ 
+  <button class="login-btn" onclick="doLogin()">Entrar →</button>
+ 
+  <div class="login-actions-secondary">
+    <button class="login-btn login-btn-secondary" onclick="doSignup()">
+      Criar conta
+    </button>
+  </div>
+ 
+  <div class="login-divider">
+    <div class="login-divider-line"></div>
+    <div class="login-divider-txt">acesso liberado após ativação</div>
+    <div class="login-divider-line"></div>
+  </div>
+</div>
+ 
+    <div class="login-note">
+      💡 Seus dados são salvos com segurança na sua conta.<br>
+      Não compartilhe seu acesso.
+    </div>
+  </div>
+</div>
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-wrap">
+      <div class="logo-atom">
+        <div class="logo-atom-ring2"></div>
+        <div class="logo-atom-ring"></div>
+        <div class="logo-atom-core"></div>
+      </div>
+      <div class="logo-text-wrap">
+        <div class="logo-name">Fissão de<br>Conhecimento</div>
+        <div class="logo-sub">ENEM · Sistema Inteligente</div>
+      </div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div class="nav-lbl">Painel</div>
+    <div class="nav-item active" onclick="go('dashboard',this)">
+      <span class="nav-icon">⬡</span><span>Dashboard</span>
+    </div>
+    <div class="nav-item" onclick="go('sessoes',this)">
+      <span class="nav-icon">📋</span><span>Sessões</span>
+    </div>
+ 
+    <div class="nav-lbl">Aprendizagem</div>
+    <div class="nav-item" onclick="go('anki',this)">
+      <span class="nav-icon">🃏</span><span>Recuperação Ativa</span>
+      <span class="nav-badge" id="ankiBadge" style="display:none">0</span>
+    </div>
+    <div class="nav-item" onclick="go('erros',this)">
+      <span class="nav-icon">📓</span><span>Caderno de Erros</span>
+    </div>
+    <div class="nav-item" onclick="go('revisoes',this)">
+      <span class="nav-icon">🔄</span><span>Revisões</span>
+      <span class="nav-badge" id="navBadge" style="display:none">0</span>
+    </div>
+ 
+    <div class="nav-lbl">Redação</div>
+    <div class="nav-item" onclick="go('redacao',this)">
+      <span class="nav-icon">✍️</span><span>Redação ENEM</span>
+    </div>
+ 
+    <div class="nav-lbl">Análise</div>
+    <div class="nav-item" onclick="go('diagnostico',this)">
+      <span class="nav-icon">🧠</span><span>Diagnóstico</span>
+    </div>
+    <div class="nav-item" onclick="go('areas',this)">
+      <span class="nav-icon">📊</span><span>Áreas</span>
+    </div>
+    <div class="nav-item" onclick="go('enem',this)">
+      <span class="nav-icon">🎯</span><span>Mapa ENEM</span>
+    </div>
+    <div class="nav-item" onclick="go('simulado',this)">
+      <span class="nav-icon">⚗️</span><span>Simulado</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="countdown-box">
+      <div class="countdown-num" id="diasEnem">—</div>
+      <div class="countdown-lbl">dias p/ ENEM 2026</div>
+    </div>
+    <div class="footer-info">Nov · 2025</div>
+    <button class="btn-reset" onclick="resetData()">⚠ LIMPAR DADOS</button>
+  </div>
+</aside>
+ 
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-logo-mobile">⚛️ <span>Fissão</span></div>
+    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    <div class="topbar-right">
+      <div class="save-badge" id="saveIndicator">✓ SALVO</div>
+      <button class="tbtn" id="themeBtn" onclick="toggleTheme()">🌙 Escuro</button>
+      <button class="tbtn" onclick="exportPDF()">📄 Exportar PDF</button>
+      <button class="tbtn tbtn-primary" onclick="openModal('session')">+ Registrar sessão</button>
+      <div class="user-pill" onclick="showLogoutMenu()" id="userPill" style="display:none">
+        <div class="user-avatar" id="userAvatarLetter">?</div>
+        <div class="user-name" id="userNameLabel">Usuário</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;padding-left:4px">
+        <div class="status-dot"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">ATIVO</span>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="content">
+ 
+    <!-- ═══ DASHBOARD ═══ -->
+    <section class="section active" id="sec-dashboard">
+ 
+      <!-- BANNER DE REVISÕES PENDENTES -->
+      <div id="revBanner" class="hidden" style="background:var(--amb-bg);border:1px solid var(--amb-br);border-radius:var(--radius);padding:11px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:13px">
+        <span style="color:var(--amb)">🔄</span>
+        <span style="color:var(--amb);font-weight:600" id="revBannerCount">0</span>
+        <span style="color:var(--tx2)" id="revBannerText">revisões pendentes</span>
+        <button onclick="go('revisoes',document.querySelector('[onclick*=revisoes]'))" style="margin-left:auto;background:var(--amb);color:#111;border:none;border-radius:var(--rsm);padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">Ver revisões →</button>
+      </div>
+ 
+      <!-- BLOCO 1: FOCO DE HOJE -->
+      <div class="foco-card ai">
+  <div class="foco-left">
+    <div class="foco-glyph">🎯</div>
+ 
+    <div class="foco-content">
+      <div class="foco-eye">FOCO DE HOJE</div>
+      <div class="foco-title" id="focoTema">Registre sessões para ver recomendações</div>
+      <div class="foco-pills" id="focoMeta"></div>
+ 
+      <button class="foco-start-btn" onclick="openModal('session', { smart: true })">
+        ▶ Estudo do dia
+      </button>
+    </div>
+  </div>
+ 
+  <div class="foco-stat-col">
+    <div class="foco-stat">Questões recomendadas: <b id="focoQuestoes">10</b></div>
+    <div class="foco-stat">Revisões hoje: <b id="focoPendentes">0</b></div>
+    <div class="foco-stat">Cartões Anki: <b id="focoAnki">0</b></div>
+  </div>
+</div>
+ 
+ 
+      <!-- BLOCO ENEM 2026 COUNTDOWN -->
+      <div class="enem-countdown ai" id="enemCountdown">
+        <div class="enem-cd-left">
+          <div class="enem-cd-label">⏳ ENEM 2026</div>
+          <div class="enem-cd-sub">Não perca tempo. Cada dia conta.</div>
+        </div>
+        <div class="enem-cd-units">
+          <div class="enem-cd-unit">
+            <div class="enem-cd-num" id="cdDias">—</div>
+            <div class="enem-cd-uname">dias</div>
+          </div>
+          <div class="enem-cd-sep">:</div>
+          <div class="enem-cd-unit">
+            <div class="enem-cd-num" id="cdHoras">—</div>
+            <div class="enem-cd-uname">horas</div>
+          </div>
+          <div class="enem-cd-sep">:</div>
+          <div class="enem-cd-unit">
+            <div class="enem-cd-num" id="cdMin">—</div>
+            <div class="enem-cd-uname">min</div>
+          </div>
+          <div class="enem-cd-sep">:</div>
+          <div class="enem-cd-unit">
+            <div class="enem-cd-num" id="cdSec" style="font-size:0.75em;opacity:0.7">—</div>
+            <div class="enem-cd-uname">seg</div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- BLOCO 2: PROGRESSO -->
+      <div class="sec-divider ai">
+        <div class="sec-divider-line"></div>
+        <div class="sec-divider-label">📈 Progresso de Estudo</div>
+        <div class="sec-divider-line"></div>
+      </div>
+ 
+      <div class="kpi-grid ai">
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--ok),#86EFAC)"></div>
+          <div class="kpi-lbl">Taxa de Acerto</div>
+          <div class="kpi-val" style="color:var(--ok)" id="kpiAcerto">—%</div>
+          <div class="kpi-sub" id="kpiAcertoSub">sem sessões</div>
+          <div class="kpi-ico">📈</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--info),#93C5FD)"></div>
+          <div class="kpi-lbl">Questões Feitas</div>
+          <div class="kpi-val" style="color:var(--info)" id="kpiTotal">0</div>
+          <div class="kpi-sub" id="kpiTotalSub">total acumulado</div>
+          <div class="kpi-ico">📝</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--ind),#A5B4FC)"></div>
+          <div class="kpi-lbl">Score Aprendizagem</div>
+          <div class="kpi-val" style="color:var(--ind)" id="kpiScore">—</div>
+          <div class="kpi-sub" id="kpiScoreSub">índice ponderado</div>
+          <div class="kpi-ico">⚡</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--amb),var(--amb-l))"></div>
+          <div class="kpi-lbl">Cartões Anki</div>
+          <div class="kpi-val" style="color:var(--amb)" id="kpiAnki">0</div>
+          <div class="kpi-sub" id="kpiAnkiSub">para revisar</div>
+          <div class="kpi-ico">🃏</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--danger),#FCA5A5)"></div>
+          <div class="kpi-lbl">Revisões Pendentes</div>
+          <div class="kpi-val" style="color:var(--danger)" id="kpiRevisoes">0</div>
+          <div class="kpi-sub">para concluir</div>
+          <div class="kpi-ico">🔄</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,#f97316,#fbbf24)"></div>
+          <div class="kpi-lbl">Sequência de Estudos</div>
+          <div class="kpi-val" style="color:#f97316" id="streakCount">0</div>
+          <div class="kpi-sub">
+            <span id="streakLabel">dias seguidos</span>
+            <span id="streakBadge" style="display:none;margin-left:5px;font-size:10px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:#f97316;padding:1px 6px;border-radius:20px"></span>
+          </div>
+          <div class="kpi-ico">🔥</div>
+        </div>
+      </div>
+ 
+      <!-- BLOCO 3: DIAGNÓSTICO -->
+      <div class="sec-divider ai">
+        <div class="sec-divider-line"></div>
+        <div class="sec-divider-label">🧠 Diagnóstico de Aprendizagem</div>
+        <div class="sec-divider-line"></div>
+      </div>
+ 
+      <div class="g2 ai">
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--danger-bg)">⚠️</div>
+              Alertas de Aprendizagem
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">AUTO</span>
+          </div>
+          <div class="card-b">
+            <div class="alerta-grid" id="alertasGrid">
+              <div class="empty">
+                <div class="empty-icon">🧬</div>
+                <p>Registre mais sessões para detectar padrões cognitivos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--amb-bg)">📉</div>
+              Pontos Fracos
+            </div>
+            <button onclick="openModal('session')"
+              style="background:var(--ind-bg);border:1px solid var(--ind-br);color:var(--ind);padding:5px 12px;border-radius:var(--radius-sm);font-size:12.5px;cursor:pointer;font-weight:600">
+              + Registrar
+            </button>
+          </div>
+          <div class="card-b">
+            <div id="pontosFracos">
+              <div class="empty"><div class="empty-icon">📊</div><p>Registre sessões com tópicos.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- BLOCO 4: FERRAMENTAS -->
+      <div class="sec-divider ai">
+        <div class="sec-divider-line"></div>
+        <div class="sec-divider-label">🛠 Ferramentas de Estudo</div>
+        <div class="sec-divider-line"></div>
+      </div>
+ 
+      <div class="g3 ai">
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--ind-bg)">🃏</div>
+              Recuperação Ativa — Hoje
+            </div>
+            <button onclick="go('anki',document.querySelector('[onclick*=anki]'))"
+              style="background:none;border:1px solid var(--ind-br);color:var(--ind);padding:5px 12px;border-radius:var(--radius-sm);font-size:12px;cursor:pointer;font-weight:600">
+              Ver todos →
+            </button>
+          </div>
+          <div class="card-b">
+            <div class="anki-wrap" id="ankiDash">
+              <div class="empty"><div class="empty-icon">🃏</div><p>Nenhum cartão para revisar agora.</p></div>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--ok-bg)">📅</div>
+              Calendário
+            </div>
+          </div>
+          <div class="card-b">
+            <div class="cal-h">
+              <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+              <div class="cal-ml" id="calMonth">—</div>
+              <button class="cal-nav" onclick="changeMonth(1)">›</button>
+            </div>
+            <div class="cal-wd">
+              <div class="cal-wdl">Dom</div><div class="cal-wdl">Seg</div><div class="cal-wdl">Ter</div>
+              <div class="cal-wdl">Qua</div><div class="cal-wdl">Qui</div><div class="cal-wdl">Sex</div><div class="cal-wdl">Sáb</div>
+            </div>
+            <div class="cal-grid" id="calGrid"></div>
+            <div style="display:flex;gap:14px;margin-top:10px">
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted2)">
+                <div style="width:8px;height:8px;background:var(--ok);border-radius:50%"></div>Sessão
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted2)">
+                <div style="width:8px;height:8px;background:var(--amb);border-radius:50%"></div>Revisão
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Trilha de Progresso -->
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--ok-bg)">🧭</div>
+              Trilha de Progresso
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)" id="trilhaAreaLabel">—</span>
+          </div>
+          <div class="card-b" id="trilhaCardBody">
+            <div class="empty"><div class="empty-icon">🧭</div><p>Registre sessões para visualizar sua trilha.</p></div>
+          </div>
+        </div>
+      </div>
+ 
+      <div style="height:20px"></div>
+ 
+      <!-- BLOCO 5: PLANO SEMANAL IA -->
+      <div class="sec-divider ai">
+        <div class="sec-divider-line"></div>
+        <div class="sec-divider-label">📅 Plano Semanal</div>
+        <div class="sec-divider-line"></div>
+      </div>
+ 
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">
+            <div class="card-icon" style="background:var(--ind-bg)">⚛️</div>
+            Plano de Estudos — Próximos 7 dias
+          </div>
+          <button
+            id="planoGerarBtn"
+            onclick="gerarPlanoSemanal(true)"
+            style="background:var(--ind);color:#fff;border:none;border-radius:var(--rsm);padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:opacity .2s"
+            onmouseover="this.style.opacity='.85'"
+            onmouseout="this.style.opacity='1'">
+            ⚛️ Gerar com IA
+          </button>
+        </div>
+        <div class="card-b" id="planoSemanalBody">
+          <div class="empty">
+            <div class="empty-icon">📅</div>
+            <p>Clique em <strong>Gerar com IA</strong> para montar seu plano da semana.<br>
+            <span style="font-size:11px;color:var(--muted)">O Atominho analisa seus pontos fracos e monta uma agenda personalizada.</span></p>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Caderno de erros recentes -->
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">
+            <div class="card-icon" style="background:var(--danger-bg)">📒</div>
+            Caderno de Erros Recentes
+          </div>
+          <button onclick="go('erros',document.querySelector('[onclick*=erros]'))"
+            style="background:none;border:1px solid #E5E7EB;color:var(--muted2);padding:5px 12px;border-radius:var(--radius-sm);font-size:12px;cursor:pointer">
+            Ver todos →
+          </button>
+        </div>
+        <div class="card-b">
+          <div class="slist" id="sessionListDash"></div>
+        </div>
+      </div>
+ 
+      <span id="sessoesCount" style="display:none"></span>
+ 
+    </section>
+ 
+    <!-- ═══ SESSÕES ═══ -->
+    <section class="section" id="sec-sessoes">
+      <div class="ph ph-row ai">
+        <div>
+          <div class="ph-eye">Histórico</div>
+          <div class="ph-title">Sessões de Estudo</div>
+        </div>
+        <button onclick="openModal('session')" class="btn-p" style="width:auto;padding:10px 22px;margin:0">+ Registrar sessão</button>
+      </div>
+      <div class="card ai">
+        <div class="card-b">
+          <div class="slist" id="sessionListFull" style="max-height:none"></div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ═══ ANKI ═══ -->
+    <section class="section" id="sec-anki">
+      <div class="ph ph-row ai">
+        <div>
+          <div class="ph-eye">Repetição Espaçada</div>
+          <div class="ph-title">🃏 Recuperação Ativa</div>
+        </div>
+        <button onclick="openModal('anki')" class="btn-p" style="width:auto;padding:10px 22px;margin:0">+ Novo Cartão</button>
+      </div>
+      <div class="kpi-grid ai" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--ind),#A5B4FC)"></div>
+          <div class="kpi-lbl">Total de Cartões</div>
+          <div class="kpi-val" style="color:var(--ind)" id="ankiTotal">0</div>
+          <div class="kpi-sub">criados</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--amb),var(--amb-l))"></div>
+          <div class="kpi-lbl">Para Revisar Hoje</div>
+          <div class="kpi-val" style="color:var(--amb)" id="ankiHoje">0</div>
+          <div class="kpi-sub">cartões pendentes</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--ok),#86EFAC)"></div>
+          <div class="kpi-lbl">Dominados</div>
+          <div class="kpi-val" style="color:var(--ok)" id="ankiDom">0</div>
+          <div class="kpi-sub">nível 4+</div>
+        </div>
+      </div>
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">Seus Cartões</div>
+          <select id="ankiFiltro" onchange="renderAnki()"
+            style="background:#fff;border:1.5px solid #E5E7EB;color:var(--tx);padding:6px 12px;border-radius:var(--radius-sm);font-size:13px;outline:none;font-family:'Outfit',sans-serif">
+            <option value="hoje">Para hoje</option>
+            <option value="todos">Todos</option>
+            <option value="dificeis">Difíceis</option>
+          </select>
+        </div>
+        <div class="card-b">
+          <div class="anki-wrap" id="ankiList">
+            <div class="empty"><div class="empty-icon">🃏</div><p>Crie seu primeiro cartão.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ═══ CADERNO DE ERROS ═══ -->
+    <section class="section" id="sec-erros">
+      <div class="ph ph-row ai">
+        <div>
+          <div class="ph-eye">Aprendizagem Ativa</div>
+          <div class="ph-title">📓 Caderno de Erros</div>
+        </div>
+        <button onclick="openModal('erro')" class="btn-p" style="width:auto;padding:10px 22px;margin:0">+ Registrar Erro</button>
+      </div>
+      <div class="g2 ai">
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--danger-bg)">📓</div>
+              Erros Registrados
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)" id="errosCount"></span>
+          </div>
+          <div class="card-b">
+            <div id="errosList">
+              <div class="empty"><div class="empty-icon">📓</div><p>Nenhum erro registrado ainda.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--amb-bg)">🔀</div>
+              Conceitos que Confundo
+            </div>
+          </div>
+          <div class="card-b">
+            <div id="conceitosList">
+              <div class="empty"><div class="empty-icon">🔀</div><p>Registre erros com conceito-chave.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ═══ REVISÕES ═══ -->
+    <section class="section" id="sec-revisoes">
+      <div class="ph ph-row ai">
+        <div>
+          <div class="ph-eye">Espaçamento +1 · +7 · +30 dias</div>
+          <div class="ph-title">Agenda de Revisões</div>
+        </div>
+        <button onclick="openModal('revision')" class="btn-p" style="width:auto;padding:10px 22px;margin:0">+ Agendar Manual</button>
+      </div>
+      <div class="tab-bar ai">
+        <button class="tab-btn active" onclick="switchRevTab('pendentes',this)">Pendentes</button>
+        <button class="tab-btn" onclick="switchRevTab('hoje',this)">Hoje</button>
+        <button class="tab-btn" onclick="switchRevTab('concluidas',this)">Concluídas</button>
+        <button class="tab-btn" onclick="switchRevTab('todas',this)">Todas</button>
+      </div>
+      <div class="card ai" style="margin-bottom:0">
+        <div class="card-b"><div id="revisionList"></div></div>
+      </div>
+    </section>
+ 
+    <!-- ═══ DIAGNÓSTICO ═══ -->
+    <section class="section" id="sec-diagnostico">
+      <div class="ph ai">
+        <div class="ph-eye">Análise Cognitiva</div>
+        <div class="ph-title">🧠 Diagnóstico de Aprendizagem</div>
+      </div>
+      <div class="kpi-grid ai" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--amb),var(--amb-l))"></div>
+          <div class="kpi-lbl">Erros Registrados</div>
+          <div class="kpi-val" style="color:var(--amb)" id="diagErros">0</div>
+          <div class="kpi-sub">total acumulado</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--danger),#FCA5A5)"></div>
+          <div class="kpi-lbl">Tipo Mais Frequente</div>
+          <div class="kpi-val" style="font-size:17px;line-height:1.4;color:var(--danger)" id="diagTipoTop">—</div>
+          <div class="kpi-sub" id="diagTipoTopPct">sem dados</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-bar" style="background:linear-gradient(90deg,var(--ind),#A5B4FC)"></div>
+          <div class="kpi-lbl">Score Geral</div>
+          <div class="kpi-val" style="color:var(--ind)" id="diagScore">—</div>
+          <div class="kpi-sub" id="diagScoreLabel">nível aprendizagem</div>
+        </div>
+      </div>
+      <div class="g2 ai" style="margin-bottom:0">
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--danger-bg)">🗺</div>
+              Mapa de Erros Cognitivos
+            </div>
+          </div>
+          <div class="card-b" id="mapaErros">
+            <div class="empty"><div class="empty-icon">🧠</div><p>Registre sessões com tipo de erro.</p></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--amb-bg)">📉</div>
+              Temas com Pior Score
+            </div>
+          </div>
+          <div class="card-b" id="pontosFracosDiag">
+            <div class="empty"><div class="empty-icon">📉</div><p>Sem dados ainda.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ═══ ÁREAS ═══ -->
+    <section class="section" id="sec-areas">
+      <div class="ph ai">
+        <div class="ph-eye">Performance</div>
+        <div class="ph-title">📊 Análise por Área</div>
+      </div>
+      <div class="kpi-grid ai" id="areaKpis" style="grid-template-columns:repeat(5,1fr)"></div>
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">
+            <div class="card-icon" style="background:var(--ind-bg)">📈</div>
+            Evolução por Área
+          </div>
+        </div>
+        <div class="card-b">
+          <div class="ae-wrap" id="areaEvolution">
+            <div class="empty" style="padding:20px"><p>Sem dados ainda.</p></div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Gráfico evolução semanal -->
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">
+            <div class="card-icon" style="background:var(--ind-bg)">📊</div>
+            Evolução Semanal
+          </div>
+        </div>
+        <div class="card-b" id="graficoEvolucao">
+          <div class="empty" style="padding:18px"><div class="empty-icon">📈</div><p>Registre sessões para ver a evolução.</p></div>
+        </div>
+      </div>
+ 
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">
+            <div class="card-icon" style="background:var(--ok-bg)">🔥</div>
+            Últimos 7 Dias
+          </div>
+        </div>
+        <div class="card-b"><div class="week-prog" id="weekChart"></div></div>
+      </div>
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">Heatmap de Atividade</div>
+        </div>
+        <div class="card-b">
+          <div id="heatmap"></div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:12px;font-size:11px;color:var(--muted)">
+            Menos
+            <div class="hm-cell" style="cursor:default"></div>
+            <div class="hm-cell l1" style="cursor:default"></div>
+            <div class="hm-cell l2" style="cursor:default"></div>
+            <div class="hm-cell l3" style="cursor:default"></div>
+            <div class="hm-cell l4" style="cursor:default"></div>
+            Mais
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ═══ MAPA ENEM ═══ -->
+    <section class="section" id="sec-enem">
+      <div class="ph ai">
+        <div class="ph-eye">Estratégia</div>
+        <div class="ph-title">🎯 Mapa de Incidência ENEM</div>
+      </div>
+      <div id="mapaIncidencia"></div>
+    </section>
+ 
+    <!-- ═══ SIMULADO ═══ -->
+    <section class="section" id="sec-simulado">
+      <div class="ph ph-row ai">
+        <div>
+          <div class="ph-eye">Prática Inteligente</div>
+          <div class="ph-title">⚗️ Simulado Inteligente</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <select id="simQtd" onchange="renderSimulado()"
+            style="background:var(--surface2);border:1.5px solid var(--border2);color:var(--tx);padding:8px 12px;border-radius:var(--rsm);font-size:13px;outline:none;font-family:'Outfit',sans-serif">
+            <option value="10">10 questões</option>
+            <option value="20" selected>20 questões</option>
+            <option value="30">30 questões</option>
+            <option value="45">45 questões</option>
+          </select>
+          <button onclick="renderSimulado()" class="btn-p" style="width:auto;padding:9px 18px;margin:0">↺ Gerar</button>
+        </div>
+      </div>
+      <div style="background:var(--info-bg);border:1px solid var(--info-br);border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;font-size:13px;color:#1D4ED8;line-height:1.6" class="ai">
+        ⚛️ Distribui questões pelos <strong>5 temas prioritários</strong>, cruzando déficit com incidência no ENEM.
+      </div>
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">Distribuição</div>
+          <div id="simTotal" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)"></div>
+        </div>
+        <div class="card-b" id="simuladoBody">
+          <div class="empty"><div class="empty-icon">⚗️</div><p>Registre sessões com tópicos.</p></div>
+        </div>
+      </div>
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">
+            <div class="card-icon" style="background:var(--ind-bg)">⏱</div>
+            Cronômetro
+          </div>
+        </div>
+        <div class="card-b" style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+          <div class="cron-disp" id="cronDisplay">00:00</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="cron-btn cron-go" onclick="cronStart()">▶ INICIAR</button>
+            <button class="cron-btn cron-sec" onclick="cronStop()">⏸ PAUSAR</button>
+            <button class="cron-btn cron-sec" onclick="cronReset()">↺ ZERAR</button>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+  </div><!-- /content -->
+</main>
+ 
+    <!-- ═══ REDAÇÃO ENEM ═══ -->
+    <section class="section" id="sec-redacao">
+      <div class="ph ph-row ai">
+        <div>
+          <div class="ph-eye">Banco de Repertórios · Argumentação · Teses</div>
+          <div class="ph-title">✍️ Redação ENEM</div>
+          <div class="ph-sub">REPERTÓRIO SOCIOCULTURAL · ARGUMENTOS · ESTRUTURA DISSERTATIVA</div>
+        </div>
+        <div style="display:flex;gap:9px;flex-wrap:wrap">
+          <button onclick="openModal('repertorio')" class="btn-p" style="width:auto;padding:10px 20px;margin:0">+ Repertório</button>
+          <button onclick="openModal('ideia')" class="btn-p" style="width:auto;padding:10px 20px;margin:0;background:var(--amb);color:#111;box-shadow:0 4px 14px rgba(245,197,24,.3)">+ Ideia / Tese</button>
+        </div>
+      </div>
+ 
+      <!-- Filtros de tema -->
+      <div class="card ai">
+        <div class="card-h">
+          <div class="card-t">
+            <div class="card-icon" style="background:var(--ind-bg)">🏷</div>
+            Filtrar por Tema
+          </div>
+        </div>
+        <div class="card-b" style="padding:12px 20px">
+          <div id="temaFiltros" style="display:flex;gap:7px;flex-wrap:wrap">
+            <button class="tema-pill active" onclick="filtrarTema('todos',this)">Todos</button>
+            <button class="tema-pill" onclick="filtrarTema('educacao',this)">📚 Educação</button>
+            <button class="tema-pill" onclick="filtrarTema('tecnologia',this)">💻 Tecnologia</button>
+            <button class="tema-pill" onclick="filtrarTema('saude-mental',this)">🧠 Saúde Mental</button>
+            <button class="tema-pill" onclick="filtrarTema('desigualdade',this)">⚖️ Desigualdade</button>
+            <button class="tema-pill" onclick="filtrarTema('meio-ambiente',this)">🌿 Meio Ambiente</button>
+            <button class="tema-pill" onclick="filtrarTema('politica',this)">🏛 Política</button>
+            <button class="tema-pill" onclick="filtrarTema('cultura',this)">🎭 Cultura</button>
+            <button class="tema-pill" onclick="filtrarTema('ciencia',this)">🔬 Ciência</button>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- 2 colunas principais -->
+      <div class="g2 ai" style="align-items:start">
+ 
+        <!-- Banco de Repertórios -->
+        <div class="card" style="margin-bottom:0">
+          <div class="card-h">
+            <div class="card-t">
+              <div class="card-icon" style="background:var(--ind-bg)">📚</div>
+              Banco de Repertórios
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)" id="repCount"></span>
+          </div>
+          <div class="card-b" style="max-height:540px;overflow-y:auto;padding:14px">
+            <div id="repertoriosList">
+              <div class="empty"><div class="empty-icon">📚</div><p>Adicione repertórios socioculturais para usar na redação.</p></div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Coluna direita -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+ 
+          <!-- Bloco de Ideias / Teses -->
+          <div class="card" style="margin-bottom:0">
+            <div class="card-h">
+              <div class="card-t">
+                <div class="card-icon" style="background:var(--amb-bg)">💡</div>
+                Ideias, Teses e Argumentos
+              </div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)" id="ideiasCount"></span>
+            </div>
+            <div class="card-b" style="max-height:240px;overflow-y:auto;padding:14px">
+              <div id="ideiasList">
+                <div class="empty"><div class="empty-icon">💡</div><p>Salve teses, argumentos e frases prontas.</p></div>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- Guia de estrutura dissertativa -->
+          <div class="card" style="margin-bottom:0">
+            <div class="card-h">
+              <div class="card-t">
+                <div class="card-icon" style="background:var(--ok-bg)">📝</div>
+                Estrutura Dissertativa
+              </div>
+            </div>
+            <div class="card-b" style="padding:14px 18px">
+              <div class="estrutura-item">
+                <div class="estrutura-num">1</div>
+                <div>
+                  <div class="estrutura-title">Introdução</div>
+                  <div class="estrutura-desc">Apresentação do tema + tese central. Use repertório de abertura.</div>
+                </div>
+              </div>
+              <div class="estrutura-item">
+                <div class="estrutura-num">2</div>
+                <div>
+                  <div class="estrutura-title">Desenvolvimento I</div>
+                  <div class="estrutura-desc">1º argumento + repertório sociocultural + exemplo concreto.</div>
+                </div>
+              </div>
+              <div class="estrutura-item">
+                <div class="estrutura-num">3</div>
+                <div>
+                  <div class="estrutura-title">Desenvolvimento II</div>
+                  <div class="estrutura-desc">2º argumento + dados/estatísticas + contra-argumento se necessário.</div>
+                </div>
+              </div>
+              <div class="estrutura-item" style="border-bottom:none;padding-bottom:0">
+                <div class="estrutura-num" style="background:var(--amb-bg);border-color:var(--amb-br);color:var(--amb)">4</div>
+                <div>
+                  <div class="estrutura-title">Conclusão</div>
+                  <div class="estrutura-desc">Retome a tese + proposta: <em>agente · ação · meio · finalidade · detalhamento</em>.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- Dicas de banca -->
+          <div class="card" style="margin-bottom:0">
+            <div class="card-h">
+              <div class="card-t">
+                <div class="card-icon" style="background:var(--danger-bg)">⭐</div>
+                Critérios de Avaliação
+              </div>
+            </div>
+            <div class="card-b" style="padding:14px 18px">
+              <div class="criterio-row"><div class="criterio-num">C1</div><div class="criterio-txt"><strong>Domínio da norma culta</strong> — gramática, ortografia, pontuação</div></div>
+              <div class="criterio-row"><div class="criterio-num" style="background:var(--ind-bg);color:var(--ind-l);border-color:var(--ind-br)">C2</div><div class="criterio-txt"><strong>Compreensão do tema</strong> — não fugir, não tangenciar</div></div>
+              <div class="criterio-row"><div class="criterio-num" style="background:var(--ok-bg);color:var(--ok);border-color:var(--ok-br)">C3</div><div class="criterio-txt"><strong>Argumentação</strong> — repertório sociocultural legítimo e pertinente</div></div>
+              <div class="criterio-row"><div class="criterio-num" style="background:var(--amb-bg);color:var(--amb);border-color:var(--amb-br)">C4</div><div class="criterio-txt"><strong>Coesão textual</strong> — conectivos, progressão, paragrafação</div></div>
+              <div class="criterio-row" style="border-bottom:none;padding-bottom:0"><div class="criterio-num" style="background:var(--danger-bg);color:var(--danger);border-color:var(--danger-br)">C5</div><div class="criterio-txt"><strong>Proposta de intervenção</strong> — completa e respeitosa aos direitos humanos</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlay(event)">
+  <div class="modal" id="modalContent"></div>
+</div>
+ 
+<!-- ═══ ASSISTENTE ÁTOMO ═══ -->
+<button id="asstToggle" onclick="toggleAssistant()" aria-label="Atominho — Assistente de Estudos">
+  <div class="asst-atom-btn">
+    <div class="asst-ring2"></div>
+    <div class="asst-ring"></div>
+    <div class="asst-core"></div>
+  </div>
+  <span class="asst-btn-label">Atominho</span>
+</button>
+ 
+<div id="asstPanel" class="asst-panel">
+  <!-- Header -->
+  <div class="asst-hdr">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="asst-hdr-icon">⚛️</div>
+      <div>
+        <div style="font-size:13.5px;font-weight:800;color:#fff;letter-spacing:-.01em">Atominho</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.45);letter-spacing:.14em">ASSISTENTE INTELIGENTE</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:5px">
+      <button onclick="clearChat()" class="asst-icon-btn" title="Limpar conversa">🗑</button>
+      <button onclick="toggleAssistant()" class="asst-icon-btn" title="Fechar">✕</button>
+    </div>
+  </div>
+ 
+  <!-- Quick suggestions -->
+  <div class="asst-suggestions" id="asstSugs">
+    <button class="asst-sug" onclick="sendQuick('O que devo estudar hoje com base no meu desempenho?')">🎯 O que estudar hoje?</button>
+    <button class="asst-sug" onclick="sendQuick('Analise meu desempenho e dê um diagnóstico detalhado.')">📊 Diagnóstico completo</button>
+    <button class="asst-sug" onclick="sendQuick('Quais são meus maiores erros e como posso corrigi-los?')">🧠 Meus erros</button>
+    <button class="asst-sug" onclick="sendQuick('Quais temas de Matemática mais caem no ENEM e como estudar?')">📐 Matemática no ENEM</button>
+    <button class="asst-sug" onclick="sendQuick('Quais temas de Ciências da Natureza mais caem no ENEM?')">🔬 Ciências da Natureza</button>
+    <button class="asst-sug" onclick="sendQuick('Sugira repertórios socioculturais para redação sobre tecnologia.')">✍️ Repertórios tecnologia</button>
+    <button class="asst-sug" onclick="sendQuick('Sugira repertórios socioculturais para redação sobre desigualdade.')">✍️ Repertórios desigualdade</button>
+    <button class="asst-sug" onclick="sendQuick('Como estruturar uma redação nota 1000 no ENEM?')">📝 Redação nota 1000</button>
+    <button class="asst-sug" onclick="sendQuick('Quantos dias faltam para o ENEM 2026?')">📅 Dias para o ENEM</button>
+    <button class="asst-sug" onclick="sendQuick('Como funciona a nota do ENEM e o que é TRI?')">📋 Como funciona o ENEM</button>
+  </div>
+ 
+  <!-- Messages -->
+  <div class="asst-msgs" id="asstMsgs">
+    <div class="asst-msg bot">
+      <div class="asst-bubble">Olá! Sou o <strong>Atominho</strong> ⚛️, seu assistente de estudos para o ENEM.<br><br>Posso <strong>analisar seu desempenho</strong>, sugerir o que estudar, explicar erros, ajudar com redação e sugerir repertórios. Como posso ajudar?</div>
+    </div>
+  </div>
+ 
+  <!-- Input -->
+  <div class="asst-input-row">
+    <textarea id="asstInput" class="asst-textarea" placeholder="Pergunte qualquer coisa…" rows="1"
+      onkeydown="handleAsstKey(event)" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"></textarea>
+    <button class="asst-send" id="asstSendBtn" onclick="sendMessage()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+ 
+  <!-- ── JavaScript modular ──────────────────────────────── -->
+  <!-- type="module" garante escopo isolado e suporte a import/export -->
+  <script type="module" src="assets/js/main.js"></script>
+ 
+</body>
+</html>

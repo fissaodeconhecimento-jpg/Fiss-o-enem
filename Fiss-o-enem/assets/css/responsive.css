@@ -1,0 +1,186 @@
+/* =======================================================
+   responsive.css — Fissão de Conhecimento — ENEM
+   ======================================================= */
+
+/* ── Tablet (961–1280px) ───────────────────────────────── */
+@media (max-width: 1280px) {
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Sidebar colapsada (601–960px) ─────────────────────── */
+@media (max-width: 960px) {
+  .sidebar {
+    width: 64px;
+    overflow: hidden;
+  }
+
+  .nav {
+    padding: 10px 8px;
+  }
+
+  .nav-item span:not(.nav-icon),
+  .sidebar-footer, .nav-lbl { display: none; }
+
+  .nav-badge { display: none !important; }
+
+  .sidebar-logo {
+    padding: 14px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logo-wrap {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .logo-text-wrap { display: none; }
+
+  .nav-item {
+    justify-content: center;
+    gap: 0;
+    padding: 12px 0;
+    min-height: 44px;
+  }
+
+  .nav-icon {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .nav-item.active {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .main { margin-left: 64px; }
+  .g2, .g3 { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .enem-cd-units { gap: 10px; }
+  .topbar-right { gap: 6px; }
+  .topbar-right .tbtn:not(.tbtn-primary) { display: none; }
+}
+
+/* ── Mobile (≤600px) ────────────────────────────────────── */
+@media (max-width: 600px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .content { padding: 12px; }
+  .fr { grid-template-columns: 1fr; }
+  .g2, .g3 { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Topbar */
+  .topbar { padding: 0 12px; gap: 6px; }
+  .topbar-logo-mobile { display: flex; }
+  .topbar-right { gap: 6px; }
+  .topbar-right .tbtn:not(.tbtn-primary) { display: none; }
+  .save-badge { display: none; }
+
+  /* Foco de hoje */
+  .foco-card { grid-template-columns: 1fr; gap: 12px; }
+  .foco-stat-col { display: none; }
+
+  /* KPIs */
+  .kpi { padding: 12px; }
+  .kpi-val { font-size: 22px; }
+
+  /* Cards */
+  .card-h { flex-wrap: wrap; gap: 8px; }
+
+  /* Countdown ENEM */
+  .enem-countdown { flex-direction: column; gap: 10px; }
+  .enem-cd-units { gap: 8px; }
+  .enem-cd-num { font-size: 28px; }
+
+  /* Atominho */
+  .asst-panel {
+    width: calc(100vw - 16px);
+    right: 8px;
+    bottom: 72px;
+    max-height: 70vh;
+  }
+
+  /* Modais */
+  .modal { width: calc(100vw - 24px); max-height: 90vh; overflow-y: auto; }
+
+  /* Sessões */
+  .sitem { flex-wrap: wrap; gap: 6px; }
+
+  /* Anki */
+  .anki-card-wrap { width: 100%; }
+
+  /* Simulado */
+  .sim-row { flex-wrap: wrap; gap: 8px; }
+
+  /* Seções */
+  .ph-title { font-size: 20px; }
+  .ph-row { flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+
+/* ── Logo mobile ─────────────────────────────────────────── */
+.topbar-logo-mobile {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #C4B5FD;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+.topbar-logo-mobile span {
+  background: linear-gradient(135deg, #C4B5FD, var(--amb-l));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Keyframes globais ──────────────────────────────────── */
+@keyframes ankiReveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes overduePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .6; }
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.93) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes asstPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(99,102,241,.45), 0 0 0 0 rgba(99,102,241,.2); }
+  50%       { box-shadow: 0 4px 20px rgba(99,102,241,.45), 0 0 0 10px rgba(99,102,241,0); }
+}
+@keyframes tDot {
+  0%, 80%, 100% { transform: scale(.7); opacity: .5; }
+  40%            { transform: scale(1); opacity: 1; }
+}
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .4; }
+}
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes atomFace {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25%       { transform: scale(1.05) rotate(-3deg); }
+  75%       { transform: scale(1.05) rotate(3deg); }
+}
+@keyframes atomTogglePulse {
+  0%, 100% { box-shadow: 0 4px 24px rgba(99,102,241,.5), 0 0 0 0 rgba(99,102,241,.35); }
+  50%       { box-shadow: 0 4px 24px rgba(99,102,241,.5), 0 0 0 12px rgba(99,102,241,0); }
+}
+@keyframes atomOrbit1 { to { transform: rotate(360deg); } }
+@keyframes atomOrbit2 { to { transform: rotate(-360deg); } }
